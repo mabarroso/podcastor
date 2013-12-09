@@ -2,3 +2,5 @@
 # Bundler
 tmp/
 data/
+bin/
+vendor/
