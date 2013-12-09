@@ -73,7 +73,8 @@ class Ivoox
             'description' => '',
             'url' => '',
             'title' => '',
-            'image' => ''
+            'image' => '',
+            'media' => ''
         );
 
         if (preg_match("|meta name=\"description\" content=\"([^\"]+)\"|", $html, $matches)) {
@@ -88,6 +89,8 @@ class Ivoox
         if (preg_match("|meta content=\"([^\"]+)\" property=\"og:image\"|", $html, $matches)) {
             $data['image'] = $matches[1];
         }
+
+        $data['media'] = $this->transformURL2MP3($data['url']);
 
         return $data;
     }
