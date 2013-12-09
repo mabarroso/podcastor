@@ -38,6 +38,13 @@ class Ivoox
     {
     }
 
+    /**
+     * [getItemList description]
+     *
+     * @param [type] $html [description]
+     *
+     * @return [type]       [description]
+     */
     public function getItemList($html)
     {
         $items = array();
@@ -53,13 +60,20 @@ class Ivoox
         return $items;
     }
 
+    /**
+     * [getItemData description]
+     *
+     * @param [type] $html [description]
+     *
+     * @return [type]       [description]
+     */
     public function getItemData($html)
     {
         $data = array(
             'description' => '',
             'url' => '',
             'title' => '',
-            'image' => ''            
+            'image' => ''
         );
 
         if (preg_match("|meta name=\"description\" content=\"([^\"]+)\"|", $html, $matches)) {
@@ -78,5 +92,21 @@ class Ivoox
         return $data;
     }
 
+    /**
+     * [transformURL2MP3 description]
+     *
+     * @param [type] $url [description]
+     *
+     * @return [type]      [description]
+     */
+    public function transformURL2MP3($url)
+    {
+        if (preg_match("|(.*)-audios-mp3_rf_([0-9]+)_1.html|", $url, $matches)) {
+            return $matches[1].'_md_'.$matches[2].'_1.mp3';
+        } else {
+            return false;
+        }
+
+    }
 
 }

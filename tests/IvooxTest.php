@@ -54,18 +54,41 @@ class IvooxTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->subject instanceof Ivoox);
     }
 
-    public function testGetItemList() 
+    /**
+     * [testTransformURL2MP3 description]
+     *
+     * @return none
+     */
+    public function testTransformURL2MP3()
+    {
+        $this->assertEquals(
+            'http://www.ivoox.com/mesa-redonda-failshow-charla-inversion-startups_md_2614024_1.mp3',
+            $this->subject->transformURL2MP3('http://www.ivoox.com/mesa-redonda-failshow-charla-inversion-startups-audios-mp3_rf_2614024_1.html')
+        );
+    }
+
+    /**
+     * [testGetItemList description]
+     *
+     * @return none
+     */
+    public function testGetItemList()
     {
         $this->assertEquals(
             array(
                 'mesa-redonda-failshow-charla-inversion-startups-audios-mp3_rf_2614024_1.html' => 'Mesa redonda failshow y charla inversión Startups',
                 'charla-git-audios-mp3_rf_2501237_1.html' => 'Charla GIT',
-            ), 
+            ),
             $this->subject->getItemList(file_get_contents('tests/_files/ivoox_podcast_list.html'))
         );
     }
 
-    public function testGetItemData() 
+    /**
+     * [testGetItemData description]
+     *
+     * @return none
+     */
+    public function testGetItemData()
     {
         $this->assertEquals(
             array(
@@ -73,9 +96,8 @@ class IvooxTest extends PHPUnit_Framework_TestCase
                 'url' => 'http://www.ivoox.com/mesa-redonda-failshow-charla-inversion-startups-audios-mp3_rf_2614024_1.html',
                 'title' => 'Mesa redonda failshow y charla inversión Startups',
                 'image' => 'http://images2.ivoox.com/canales/7791383135189fb.jpg'
-            ), 
+            ),
             $this->subject->getItemData(file_get_contents('tests/_files/ivoox_podcast_item.html'))
         );
     }
-
 }
