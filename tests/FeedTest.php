@@ -74,15 +74,43 @@ class FeedTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * [testOpen description]
+     *
+     * @return none
+     */
+    public function testOpen()
+    {
+        $this->subject->close();
+        //$this->unlink(self::FILENAME);
+        //$this->assertFalse(file_exists(self::FILENAME), "File ".self::FILENAME." must be deleted");
+        $this->subject->open();
+        $this->assertTrue(file_exists(self::FILENAME), "File ".self::FILENAME." must be created");
+    }
+
+    /**
      * [testAddHeader description]
      *
      * @return none
      */
     public function testAddHeader()
     {
+        $this->subject->open();
         $this->subject->addHeader('title', 'link');
         $this->subject->close();
         $this->assertFileEquals('tests/_files/expected_feed_testAddHeader.xml', self::FILENAME);
+    }
+
+    /**
+     * [testAddHeader description]
+     *
+     * @return none
+     */
+    public function testAddFooter()
+    {
+        $this->subject->open();
+        $this->subject->addFooter();
+        $this->subject->close();
+        $this->assertFileEquals('tests/_files/expected_feed_testAddFooter.xml', self::FILENAME);
     }
 
 }

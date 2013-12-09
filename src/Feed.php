@@ -52,11 +52,21 @@ class Feed
     {
         $this->_filePath = $filePath;
 
+        $this->open();
+    }
+
+    /**
+     * [open close]
+     *
+     * @return none
+     */
+    public function open()
+    {
         $this->_fh = fopen($this->_filePath, 'w+');
     }
 
     /**
-     * [unsetFile close]
+     * [close close]
      *
      * @return none
      */
@@ -83,6 +93,22 @@ class Feed
     <channel>
         <title>$title</title>
         <link>$link</link>
+EOT
+        );
+    }
+
+    /**
+     * [addFooter description]
+     * 
+     * @return none
+     */
+    public function addFooter()
+    {
+        fputs(
+            $this->_fh,
+<<<EOT
+    </channel>
+</rss>
 EOT
         );
     }
