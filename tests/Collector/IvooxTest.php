@@ -15,7 +15,7 @@
  * @since      File available since Release 0.1
  */
 
-require_once 'src/Ivoox.php';
+require_once 'src/Collector/Ivoox.php';
 
 /**
  * IvooxTest

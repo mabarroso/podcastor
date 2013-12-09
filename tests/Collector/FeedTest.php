@@ -15,7 +15,7 @@
  * @since      File available since Release 0.1
  */
 
-require_once 'src/Feed.php';
+require_once 'src/Collector/Feed.php';
 
 /**
  * FeedTest
