@@ -29,6 +29,7 @@
 class Feed
 {
     private $_filePath;
+    private $_fh;
 
     /**
      * [__construct description]
@@ -37,7 +38,52 @@ class Feed
      */
     public function __construct($filePath)
     {
-        $this->_filePath = $filePath;
+        $this->setFile($filePath);
     }
 
+    /**
+     * [setFile description]
+     *
+     * @param [type] $filePath [description]
+     *
+     * @return none
+     */
+    public function setFile($filePath)
+    {
+        $this->_filePath = $filePath;
+
+        $this->_fh = fopen($this->_filePath, 'w+');
+    }
+
+    /**
+     * [unsetFile close]
+     *
+     * @return none
+     */
+    public function close()
+    {
+        fclose($this->_fh);
+    }
+
+    /**
+     * [addHeader description]
+     *
+     * @param [type] $title [description]
+     * @param [type] $link  [description]
+     *
+     * @return none
+     */
+    public function addHeader($title, $link)
+    {
+        fputs(
+            $this->_fh,
+<<<EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+    <channel>
+        <title>$title</title>
+        <link>$link</link>
+EOT
+        );
+    }
 }

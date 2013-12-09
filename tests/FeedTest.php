@@ -35,7 +35,7 @@ class FeedTest extends PHPUnit_Framework_TestCase
     protected $subject;
 
     const FILEPATH = 'tmp';
-    const FILENAME = "{self::FILEPATH}/feed.xml";
+    const FILENAME = 'tmp/feed.xml';
 
     /**
      * Constructor
@@ -44,7 +44,7 @@ class FeedTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        mkdir(self::FILEPATH, 0777, true);
+        if (!file_exists(self::FILEPATH)) mkdir(self::FILEPATH, 0777, true);
         $this->subject = new Feed(self::FILENAME);
     }
 
@@ -56,6 +56,33 @@ class FeedTest extends PHPUnit_Framework_TestCase
     public function testInstanceType()
     {
         $this->assertTrue($this->subject instanceof Feed);
+    }
+
+    /**
+     * [testSetFile description]
+     *
+     * @return none
+     */
+    public function testSetFile()
+    {
+        $this->assertTrue(file_exists(self::FILENAME), "File ".self::FILENAME." must be created by constructor");
+        $this->subject->close();
+        //$this->unlink(self::FILENAME);
+        //$this->assertFalse(file_exists(self::FILENAME), "File ".self::FILENAME." must be deleted");
+        $this->subject->setFile(self::FILENAME);
+        $this->assertTrue(file_exists(self::FILENAME), "File ".self::FILENAME." must be created");
+    }
+
+    /**
+     * [testAddHeader description]
+     *
+     * @return none
+     */
+    public function testAddHeader()
+    {
+        $this->subject->addHeader('title', 'link');
+        $this->subject->close();
+        $this->assertFileEquals('tests/_files/expected_feed_testAddHeader.xml', self::FILENAME);
     }
 
 }
