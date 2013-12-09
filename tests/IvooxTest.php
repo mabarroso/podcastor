@@ -64,4 +64,18 @@ class IvooxTest extends PHPUnit_Framework_TestCase
             $this->subject->getItemList(file_get_contents('tests/_files/ivoox_podcast_list.html'))
         );
     }
+
+    public function testGetItemData() 
+    {
+        $this->assertEquals(
+            array(
+                'description' => 'Mesa redonda sobre proyectos fallidos y charla sobre la inversión en . Programa: Podcast de Betabeers. Canal: Betabeers. Tiempo: 01:01:30. Subido 04/12 a las 09:35:42 2614024 ',
+                'url' => 'http://www.ivoox.com/mesa-redonda-failshow-charla-inversion-startups-audios-mp3_rf_2614024_1.html',
+                'title' => 'Mesa redonda failshow y charla inversión Startups',
+                'image' => 'http://images2.ivoox.com/canales/7791383135189fb.jpg'
+            ), 
+            $this->subject->getItemData(file_get_contents('tests/_files/ivoox_podcast_item.html'))
+        );
+    }
+
 }

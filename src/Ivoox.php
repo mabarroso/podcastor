@@ -52,4 +52,31 @@ class Ivoox
 
         return $items;
     }
+
+    public function getItemData($html)
+    {
+        $data = array(
+            'description' => '',
+            'url' => '',
+            'title' => '',
+            'image' => ''            
+        );
+
+        if (preg_match("|meta name=\"description\" content=\"([^\"]+)\"|", $html, $matches)) {
+            $data['description'] = $matches[1];
+        }
+        if (preg_match("|meta content=\"([^\"]+)\" property=\"og:url\"|", $html, $matches)) {
+            $data['url'] = $matches[1];
+        }
+        if (preg_match("|meta content=\"([^\"]+)\" property=\"og:title\"|", $html, $matches)) {
+            $data['title'] = $matches[1];
+        }
+        if (preg_match("|meta content=\"([^\"]+)\" property=\"og:image\"|", $html, $matches)) {
+            $data['image'] = $matches[1];
+        }
+
+        return $data;
+    }
+
+
 }
