@@ -54,4 +54,14 @@ class IvooxTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->subject instanceof Ivoox);
     }
 
+    public function testGetItemList() 
+    {
+        $this->assertEquals(
+            array(
+                'mesa-redonda-failshow-charla-inversion-startups-audios-mp3_rf_2614024_1.html' => 'Mesa redonda failshow y charla inversión Startups',
+                'charla-git-audios-mp3_rf_2501237_1.html' => 'Charla GIT',
+            ), 
+            $this->subject->getItemList(file_get_contents('tests/_files/ivoox_podcast_list.html'))
+        );
+    }
 }

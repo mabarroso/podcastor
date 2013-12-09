@@ -38,4 +38,18 @@ class Ivoox
     {
     }
 
+    public function getItemList($html)
+    {
+        $items = array();
+
+        if (preg_match_all("|class=\"titulo\"[^>]+href=\"([^\"]+)\"[^>]+>([^<]+)<|", $html, $matches)) {
+
+            $n = count($matches)-1;
+            for ($i=0; $i < $n; $i++) {
+                $items[$matches[1][$i]] = $matches[2][$i];
+            }
+        }
+
+        return $items;
+    }
 }
