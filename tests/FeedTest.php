@@ -113,4 +113,27 @@ class FeedTest extends PHPUnit_Framework_TestCase
         $this->assertFileEquals('tests/_files/expected_feed_testAddFooter.xml', self::FILENAME);
     }
 
+    /**
+     * [testAddItem description]
+     *
+     * @return none
+     */
+    public function testAddItem()
+    {
+        $this->subject->open();
+        $this->subject->addItem(
+            'Shake Shake Shake Your Spices',
+            'John Doe',
+            'A short primer on table spices',
+            'This week we talk about salt and pepper shakers, comparing and contrasting pour rates, construction materials, and overall aesthetics. Come and join the party!',
+            'http://example.com/podcasts/everything/AllAboutEverything/Episode1.jpg',
+            'http://example.com/podcasts/everything/AllAboutEverythingEpisode3.m4a',
+            '8727310',
+            'http://example.com/podcasts/archive/aae20050615.m4a',
+            'Wed, 15 Jun 2005 19:00:00 GMT',
+            '7:04'
+        );
+        $this->subject->close();
+        $this->assertFileEquals('tests/_files/expected_feed_testAddItem.xml', self::FILENAME);
+    }
 }

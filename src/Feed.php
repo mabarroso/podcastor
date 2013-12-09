@@ -112,4 +112,25 @@ EOT
 EOT
         );
     }
+
+    public function addItem($title, $author, $subtitle, $summary, $image, $enclosure, $length, $guid, $pubDate, $duration)
+    {
+        fputs(
+            $this->_fh,
+<<<EOT
+        <item>
+            <title>$title</title>
+            <itunes:author>$author</itunes:author>
+            <itunes:subtitle>$subtitle</itunes:subtitle>
+            <itunes:summary>$summary</itunes:summary>
+            <itunes:image href="$image" />
+            <enclosure url="$enclosure" length="$length" type="audio/x-m4a" />
+            <guid>$guid</guid>
+            <pubDate>$pubDate</pubDate>
+            <itunes:duration>$duration</itunes:duration>
+        </item>
+EOT
+        );
+    }
+
 }
