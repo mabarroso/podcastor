@@ -36,9 +36,11 @@ class Feed
      *
      * @param [type] $filePath [description]
      */
-    public function __construct($filePath)
+    public function __construct($filePath = false)
     {
-        $this->setFile($filePath);
+        if ($filePath) {
+            $this->setFile($filePath);
+        }
     }
 
     /**
@@ -99,7 +101,7 @@ EOT
 
     /**
      * [addFooter description]
-     * 
+     *
      * @return none
      */
     public function addFooter()
