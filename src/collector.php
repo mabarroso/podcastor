@@ -4,7 +4,8 @@ require_once 'Collector/Ivoox.php';
 
 
 $tasks = array(
-    array('Betabeers', 'http://www.ivoox.com/podcast-podcast-betabeers_sq_f189550_1.html', '../tmp/betabeers.xml'),
+//    array('Betabeers', 'http://www.ivoox.com/podcast-podcast-betabeers_sq_f189550_1.html', '../tmp/betabeers.xml'),
+    array('Terror y nada más', 'http://www.ivoox.com/podcast-terror-nada-mas_sq_f1407_1.html', '../tmp/tynm.xml'),
 );
 
 $collector = new Collector();
@@ -43,7 +44,6 @@ class Collector
      */
     function task($title, $url, $xml)
     {
-echo $xml;
         $this->setHost($url);
         $this->feed->setFile($xml);
 

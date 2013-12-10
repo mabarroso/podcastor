@@ -55,7 +55,7 @@ class Ivoox
                 $items[$matches[1][$i]] = $matches[2][$i];
             }
         }
-
+//print_r($items);
         return $items;
     }
 
