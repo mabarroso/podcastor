@@ -50,8 +50,7 @@ class Ivoox
         $items = array();
 
         if (preg_match_all("|class=\"titulo\"[^>]+href=\"([^\"]+)\"[^>]+>([^<]+)<|", $html, $matches)) {
-
-            $n = count($matches)-1;
+            $n = count($matches[1])-1;
             for ($i=0; $i < $n; $i++) {
                 $items[$matches[1][$i]] = $matches[2][$i];
             }
@@ -90,7 +89,7 @@ class Ivoox
             $data['image'] = $matches[1];
         }
 
-        $data['media'] = $this->transformURL2MP3($data['url']);
+        $data['media'] = $this->transformURL2MP3($data['url']).'?t=laenoZuleqetpw%3D%3D';
 
         return $data;
     }
