@@ -28,6 +28,7 @@
  */
 class Ivoox
 {
+    const URL_SIGN = '?t=laenoZuleqetpw%3D%3D';
     private $_filePath;
 
     /**
@@ -50,12 +51,12 @@ class Ivoox
         $items = array();
 
         if (preg_match_all("|class=\"titulo\"[^>]+href=\"([^\"]+)\"[^>]+>([^<]+)<|", $html, $matches)) {
-            $n = count($matches[1])-1;
+            $n = count($matches[1]);
             for ($i=0; $i < $n; $i++) {
                 $items[$matches[1][$i]] = $matches[2][$i];
             }
         }
-//print_r($items);
+
         return $items;
     }
 
@@ -73,6 +74,7 @@ class Ivoox
             'url' => '',
             'title' => '',
             'image' => '',
+            'date'  => '',
             'media' => ''
         );
 
@@ -85,11 +87,14 @@ class Ivoox
         if (preg_match("|meta content=\"([^\"]+)\" property=\"og:title\"|", $html, $matches)) {
             $data['title'] = $matches[1];
         }
+        if (preg_match("|el ([0-9]{2}/[0-9]{2}/[0-9]{4}), en|", $html, $matches)) {
+            $data['date'] = $matches[1];
+        }
         if (preg_match("|meta content=\"([^\"]+)\" property=\"og:image\"|", $html, $matches)) {
             $data['image'] = $matches[1];
         }
 
-        $data['media'] = $this->transformURL2MP3($data['url']).'?t=laenoZuleqetpw%3D%3D';
+        $data['media'] = $this->transformURL2MP3($data['url']).self::URL_SIGN;
 
         return $data;
     }
