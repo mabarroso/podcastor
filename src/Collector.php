@@ -66,7 +66,7 @@ class Collector
                     $item_data['media'],
                     0,
                     $item_data['url'],
-                    0,
+                    $item_data['date'],
                     0
                 );
             }

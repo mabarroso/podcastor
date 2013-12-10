@@ -97,7 +97,7 @@ class IvooxTest extends PHPUnit_Framework_TestCase
                 'title' => 'Mesa redonda failshow y charla inversión Startups',
                 'image' => 'http://images2.ivoox.com/canales/7791383135189fb.jpg',
                 'media' => 'http://www.ivoox.com/mesa-redonda-failshow-charla-inversion-startups_md_2614024_1.mp3'.Ivoox::URL_SIGN,
-                'date'  => '04/12/2013'
+                'date'  => 'Wed, 04 Dec 2013 00:00:00 +0100'
             ),
             $this->subject->getItemData(file_get_contents('tests/_files/ivoox_podcast_item.html'))
         );

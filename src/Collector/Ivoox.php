@@ -14,6 +14,8 @@
  * @since     File available since Release 0.1
  */
 
+date_default_timezone_set('Europe/Paris');
+
 /**
  * Ivoox
  *
@@ -88,7 +90,8 @@ class Ivoox
             $data['title'] = $matches[1];
         }
         if (preg_match("|el ([0-9]{2}/[0-9]{2}/[0-9]{4}), en|", $html, $matches)) {
-            $data['date'] = $matches[1];
+            list($d, $m, $y) = explode('/', $matches[1]);
+            $data['date'] = date(DATE_RFC2822, strtotime("$y-$m-$d"));            
         }
         if (preg_match("|meta content=\"([^\"]+)\" property=\"og:image\"|", $html, $matches)) {
             $data['image'] = $matches[1];
