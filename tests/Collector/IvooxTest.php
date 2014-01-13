@@ -55,15 +55,33 @@ class IvooxTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * [testTransformURL2MP3 description]
+     * [testGetIdfromPublicURL description]
      *
      * @return none
      */
-    public function testTransformURL2MP3()
+    public function testGetIdfromPublicURL()
     {
         $this->assertEquals(
-            'http://www.ivoox.com/mesa-redonda-failshow-charla-inversion-startups_md_2614024_1.mp3',
-            $this->subject->transformURL2MP3('http://www.ivoox.com/mesa-redonda-failshow-charla-inversion-startups-audios-mp3_rf_2614024_1.html')
+            '29017',
+            $this->subject->getIdfromPublicURL('http://www.ivoox.com/podcast-audiorelatos-audiolibros-de-terror-tynm-t-3_sq_f129017_1.html')
+        );
+        $this->assertEquals(
+            '407',
+            $this->subject->getIdfromPublicURL('http://www.ivoox.com/podcast-terror-nada-mas_sq_f1407_1.html')
+        );
+    }
+
+
+    /**
+     * [testGetURLForId description]
+     *
+     * @return none
+     */
+    public function testGetURLForId()
+    {
+        $this->assertEquals(
+            'http://api.ivoox.com/?function=getAudiosByWordsAndFilters&idPodcast=29017',
+            $this->subject->getURLForId('29017')
         );
     }
 
@@ -72,34 +90,25 @@ class IvooxTest extends PHPUnit_Framework_TestCase
      *
      * @return none
      */
-    public function testGetItemList()
+    public function testGetItems()
     {
-        $this->assertEquals(
-            array(
-                'mesa-redonda-failshow-charla-inversion-startups-audios-mp3_rf_2614024_1.html' => 'Mesa redonda failshow y charla inversión Startups',
-                'charla-git-audios-mp3_rf_2501237_1.html' => 'Charla GIT',
-            ),
-            $this->subject->getItemList(file_get_contents('tests/_files/ivoox_podcast_list.html'))
-        );
-    }
+        $items = $this->subject->getItems(file_get_contents('tests/_files/getAudiosByWordsAndFilters.xml'));
 
-    /**
-     * [testGetItemData description]
-     *
-     * @return none
-     */
-    public function testGetItemData()
-    {
+        $this->assertEquals(19, count($items));
+
         $this->assertEquals(
             array(
-                'description' => 'Mesa redonda sobre proyectos fallidos y charla sobre la inversión en . Programa: Podcast de Betabeers. Canal: Betabeers. Tiempo: 01:01:30. Subido 04/12 a las 09:35:42 2614024 ',
-                'url' => 'http://www.ivoox.com/mesa-redonda-failshow-charla-inversion-startups-audios-mp3_rf_2614024_1.html',
-                'title' => 'Mesa redonda failshow y charla inversión Startups',
-                'image' => 'http://images2.ivoox.com/canales/7791383135189fb.jpg',
-                'media' => 'http://www.ivoox.com/mesa-redonda-failshow-charla-inversion-startups_md_2614024_1.mp3'.Ivoox::URL_SIGN,
-                'date'  => 'Wed, 04 Dec 2013 00:00:00 +0100'
+                'description' => "Relato Perteneciente A La Biblioteca Universal Del Terror Y El Misterio Adaptado Por TyNM\nwww.terrorynadamas.com\nwww.facebook.com/terrorynadamas",
+                'url' => 'http://www.ivoox.com/tynm-19-pedro-montero-emision-de-madrugada-audios-mp3_rf_950626_1.html',
+                'title' => 'TyNM 19 Pedro Montero - Emision De Madrugada',
+                'image' => 'http://images2.ivoox.com/canales/6991324338810g.jpg',
+                'media' => 'http://www.ivoox.com/tynm-19-pedro-montero-emision-de-madrugada_mn_950626_1.mp3',
+                'date'  => 'Tue, 20 Dec 2011 00:00:00 +0100',
+                'duration' => '36:44',
+                'podcasttitle' => 'Audiorelatos / Audiolibros De Terror - TyNM T.3',
+                'channeltitle' => 'Radioteatro De Horror - Terror y Nada Más'
             ),
-            $this->subject->getItemData(file_get_contents('tests/_files/ivoox_podcast_item.html'))
+            $items[0]
         );
     }
 }

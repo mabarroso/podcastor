@@ -30,8 +30,7 @@ date_default_timezone_set('Europe/Paris');
  */
 class Ivoox
 {
-    const URL_SIGN = '?t=laenoZuleqetpw%3D%3D';
-    private $_filePath;
+    const URL_RSS = 'http://api.ivoox.com/?function=getAudiosByWordsAndFilters&idPodcast=';
 
     /**
      * [__construct description]
@@ -42,25 +41,33 @@ class Ivoox
     }
 
     /**
-     * [getItemList description]
+     * [getIdfromPublicURL description]
      *
-     * @param [type] $html [description]
+     * @param [type] $url [description]
      *
-     * @return [type]       [description]
+     * @return [type]      [description]
      */
-    public function getItemList($html)
+    public function getIdfromPublicURL($url)
     {
-        $items = array();
-
-        if (preg_match_all("|class=\"titulo\"[^>]+href=\"([^\"]+)\"[^>]+>([^<]+)<|", $html, $matches)) {
-            $n = count($matches[1]);
-            for ($i=0; $i < $n; $i++) {
-                $items[$matches[1][$i]] = $matches[2][$i];
-            }
+        if (preg_match("|sq_f1([0-9]+)_1|", $url, $matches)) {
+            return $matches[1];
         }
 
-        return $items;
+        return false;
     }
+
+    /**
+     * [getURLForId description]
+     *
+     * @param [type] $id [description]
+     *
+     * @return [type]     [description]
+     */
+    public function getURLForId($id)
+    {
+        return self::URL_RSS.$id;
+    }
+
 
     /**
      * [getItemData description]
@@ -69,54 +76,44 @@ class Ivoox
      *
      * @return [type]       [description]
      */
-    public function getItemData($html)
+    public function getItems($html)
     {
-        $data = array(
-            'description' => '',
-            'url' => '',
-            'title' => '',
-            'image' => '',
-            'date'  => '',
-            'media' => ''
-        );
+        $items = array();
 
-        if (preg_match("|meta name=\"description\" content=\"([^\"]+)\"|", $html, $matches)) {
-            $data['description'] = $matches[1];
-        }
-        if (preg_match("|meta content=\"([^\"]+)\" property=\"og:url\"|", $html, $matches)) {
-            $data['url'] = $matches[1];
-        }
-        if (preg_match("|meta content=\"([^\"]+)\" property=\"og:title\"|", $html, $matches)) {
-            $data['title'] = $matches[1];
-        }
-        if (preg_match("|el ([0-9]{2}/[0-9]{2}/[0-9]{4}), en|", $html, $matches)) {
-            list($d, $m, $y) = explode('/', $matches[1]);
-            $data['date'] = date(DATE_RFC2822, strtotime("$y-$m-$d"));            
-        }
-        if (preg_match("|meta content=\"([^\"]+)\" property=\"og:image\"|", $html, $matches)) {
-            $data['image'] = $matches[1];
-        }
+        $query = new SimpleXMLElement($html);
 
-        $data['media'] = $this->transformURL2MP3($data['url']).self::URL_SIGN;
+        if ($query->stat != 'ok') return $items;
 
-        return $data;
-    }
+        foreach ($query->results->audio as $audio) {
+            $data = array(
+                'description' => '',
+                'url' => '',
+                'title' => '',
+                'image' => '',
+                'date'  => '',
+                'duration' => '',
+                'media' => '',
+                'podcasttitle' => '',
+                'channeltitle' => ''
+            );
 
-    /**
-     * [transformURL2MP3 description]
-     *
-     * @param [type] $url [description]
-     *
-     * @return [type]      [description]
-     */
-    public function transformURL2MP3($url)
-    {
-        if (preg_match("|(.*)-audios-mp3_rf_([0-9]+)_1.html|", $url, $matches)) {
-            return $matches[1].'_md_'.$matches[2].'_1.mp3';
-        } else {
-            return false;
+            $data['description'] = (string) $audio->description;
+            $data['url'] = (string)  $audio->shareurl;
+            $data['title'] = (string) $audio->title;
+            $data['image'] = (string) $audio->image;
+
+            list($d, $m, $y) = explode('/', (string) $audio->date);
+            $data['date'] = date(DATE_RFC2822, strtotime("$y-$m-$d"));
+
+            $data['duration'] = (string) $audio->duration;
+            $data['media'] = (string) $audio->file;
+            $data['podcasttitle'] = (string) $audio->podcasttitle;
+            $data['channeltitle'] = (string) $audio->channeltitle;
+
+            $items[] = $data;
         }
 
+        return $items;
     }
 
 }

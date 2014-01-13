@@ -4,8 +4,8 @@ require_once 'Collector/Ivoox.php';
 
 
 $tasks = array(
-//    array('Betabeers', 'http://www.ivoox.com/podcast-podcast-betabeers_sq_f189550_1.html', '../tmp/betabeers.xml'),
-    array('Terror y nada más', 'http://www.ivoox.com/podcast-terror-nada-mas_sq_f1407_1.html', '../tmp/tynm.xml'),
+    array('Betabeers', 'http://www.ivoox.com/podcast-podcast-betabeers_sq_f189550_1.html', './tmp/betabeers.xml'),
+    array('Terror y nada más', 'http://www.ivoox.com/podcast-terror-nada-mas_sq_f1407_1.html', './tmp/tynm.xml'),
 );
 
 $collector = new Collector();
@@ -13,8 +13,6 @@ $collector = new Collector();
 foreach ($tasks as $task) {
     $collector->task($task[0], $task[1], $task[2]);
 }
-
-
 
 
 
@@ -34,6 +32,18 @@ class Collector
     }
 
     /**
+     * [log description]
+     *
+     * @param [type] $msg [description]
+     *
+     * @return [type]      [description]
+     */
+    function log($msg)
+    {
+        echo sprintf("%s %s\n", date('d/m/Y h:m:s'), $msg);
+    }
+
+    /**
      * [task description]
      *
      * @param [type] $title [description]
@@ -44,18 +54,22 @@ class Collector
      */
     function task($title, $url, $xml)
     {
-        $this->setHost($url);
+        $this->log("$title - $url");
+
         $this->feed->setFile($xml);
 
+        $podcast_html = file_get_contents($this->ivoox->getURLForId($this->ivoox->getIdfromPublicURL($url)));
+
+        $items = $this->ivoox->getItems($podcast_html);
+
+        $this->log("\tFound ".count($items)." items");
+
+        if (count($items) == 0) return false;
+
         $this->feed->open();
-        $this->feed->addHeader($title, $url);
+        $this->feed->addHeader($items[0]['podcasttitle'], $url);
 
-        $podcast_home_html = file_get_contents($url);
-        $item_list = $this->ivoox->getItemList($podcast_home_html);
-        foreach ($item_list as $item_url => $item_title) {
-            $item_html = file_get_contents($this->validateHost($item_url));
-            $item_data = $this->ivoox->getItemData($item_html);
-
+        foreach ($items as $item_data) {
             if ($item_data) {
                 $this->feed->addItem(
                     $item_data['title'],
@@ -64,44 +78,15 @@ class Collector
                     $item_data['description'],
                     $item_data['image'],
                     $item_data['media'],
-                    0,
+                    $item_data['duration'],
                     $item_data['url'],
                     $item_data['date'],
-                    0
+                    $item_data['duration']
                 );
             }
         }
         $this->feed->addFooter();
         $this->feed->close();
-    }
-
-    /**
-     * [setHost description]
-     *
-     * @param [type] $url [description]
-     *
-     * @return none
-     */
-    function setHost($url)
-    {
-        $parts = parse_url($url);
-        $this->currentHostURL = "{$parts['scheme']}://{$parts['host']}";
-    }
-
-    /**
-     * [validateHost description]
-     *
-     * @param [type] $url [description]
-     *
-     * @return [type]      [description]
-     */
-    function validateHost($url)
-    {
-        if (!$url) return false;
-        if (!preg_match('|^http://|', $url))
-            return $this->currentHostURL . '/'. $url;
-        else
-            return $url;
     }
 
 }
