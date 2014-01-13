@@ -1,6 +1,6 @@
 *.DS_Store
-# Bundler
 tmp/
 data/
 bin/
 vendor/
+feeds/*.xml

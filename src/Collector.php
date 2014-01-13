@@ -4,8 +4,8 @@ require_once 'Collector/Ivoox.php';
 
 
 $tasks = array(
-    array('Betabeers', 'http://www.ivoox.com/podcast-podcast-betabeers_sq_f189550_1.html', './tmp/betabeers.xml'),
-    array('Terror y nada más', 'http://www.ivoox.com/podcast-terror-nada-mas_sq_f1407_1.html', './tmp/tynm.xml'),
+    array('Betabeers', 'http://www.ivoox.com/podcast-podcast-betabeers_sq_f189550_1.html', './feeds/betabeers.xml'),
+    array('Terror y nada más', 'http://www.ivoox.com/podcast-terror-nada-mas_sq_f1407_1.html', './feeds/tynm.xml'),
 );
 
 $collector = new Collector();
@@ -78,7 +78,7 @@ class Collector
                     $item_data['description'],
                     $item_data['image'],
                     $item_data['media'],
-                    $item_data['duration'],
+                    $item_data['filesize'],
                     $item_data['url'],
                     $item_data['date'],
                     $item_data['duration']
