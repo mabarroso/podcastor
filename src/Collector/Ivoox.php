@@ -92,6 +92,7 @@ class Ivoox
                 'image' => '',
                 'date'  => '',
                 'duration' => '',
+                'filesize' => '',
                 'media' => '',
                 'podcasttitle' => '',
                 'channeltitle' => ''
@@ -106,6 +107,7 @@ class Ivoox
             $data['date'] = date(DATE_RFC2822, strtotime("$y-$m-$d"));
 
             $data['duration'] = (string) $audio->duration;
+            $data['filesize'] = (string) $audio->filesize;
             $data['media'] = (string) $audio->file;
             $data['podcasttitle'] = (string) $audio->podcasttitle;
             $data['channeltitle'] = (string) $audio->channeltitle;

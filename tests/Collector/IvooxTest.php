@@ -105,6 +105,7 @@ class IvooxTest extends PHPUnit_Framework_TestCase
                 'media' => 'http://www.ivoox.com/tynm-19-pedro-montero-emision-de-madrugada_mn_950626_1.mp3',
                 'date'  => 'Tue, 20 Dec 2011 00:00:00 +0100',
                 'duration' => '36:44',
+                'filesize' => '50',
                 'podcasttitle' => 'Audiorelatos / Audiolibros De Terror - TyNM T.3',
                 'channeltitle' => 'Radioteatro De Horror - Terror y Nada Más'
             ),
