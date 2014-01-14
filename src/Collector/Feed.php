@@ -115,7 +115,7 @@ EOT
         );
     }
 
-    public function addItem($title, $author, $subtitle, $summary, $image, $enclosure, $length, $guid, $pubDate, $duration)
+    public function addItem($title, $author, $subtitle, $summary, $image, $enclosure, $length, $guid, $pubDate, $duration, $extra = '')
     {
         fputs(
             $this->_fh,
@@ -130,6 +130,9 @@ EOT
             <guid>$guid</guid>
             <pubDate>$pubDate</pubDate>
             <itunes:duration>$duration</itunes:duration>
+            <xta>
+                $extra
+            </xta>
         </item>
 EOT
         );

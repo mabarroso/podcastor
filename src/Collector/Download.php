@@ -38,7 +38,6 @@ class Download
         $this->path = false;
     }
 
-
     /**
      * [setPath description]
      *
@@ -96,6 +95,15 @@ class Download
         }
     }
 
+    /**
+     * [getURL description]
+     *
+     * @param [type] $filename     [description]
+     * @param [type] $pathToRemove [description]
+     * @param [type] $toAdd        [description]
+     *
+     * @return none
+     */
     public function getURL($filename, $pathToRemove, $toAdd)
     {
         $filename_mp3 = $this->getMp3Name($filename);
@@ -103,4 +111,69 @@ class Download
         return str_replace($pathToRemove, $toAdd, $filename_mp3);
     }
 
+    /**
+     * [getPends description]
+     *
+     * @return Array
+     */
+    public function getPends()
+    {
+        return glob($this->path.'/*.pend');
+    }
+
+    /**
+     * [getURLFileContents description]
+     *
+     * @param [type] $url [description]
+     *
+     * @return Bolean or Data
+     */
+    public function getURLFileContents($url)
+    {
+        $agent = 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)';
+
+        $ch = curl_init();
+        $source = $url;
+        //curl_setopt($ch, CURLOPT_VERBOSE, true);
+        curl_setopt($ch, CURLOPT_URL, $source);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+        //curl_setopt($ch, CURLOPT_REFERER, 'https://www.domain.com/');
+        $data = curl_exec($ch);
+        curl_close($ch);
+
+        return $data;
+    }
+
+    /**
+     * [downloadPends description]
+     *
+     * @param boolean $max [description]
+     *
+     * @return [type]       [description]
+     */
+    public function downloadPends($max = false)
+    {
+        $pends = $this->getPends();
+
+        $downloaded = 0;
+        foreach ($pends as $filename_pend) {
+            $filename_mp3 = str_replace('.pend', '.mp3', $filename_pend);
+            $url = file_get_contents($filename_pend);
+
+            $data = $this->getURLFileContents($url, $filename_mp3);
+            if ($data) {
+                $file = fopen($filename_mp3, "w+");
+                fputs($file, $data);
+                fclose($file);
+                $downloaded++;
+                unlink($filename_pend);
+            } else {
+                if (file_exists($filename_mp3)) unlink($filename_mp3);
+            }
+            if ($max && ($downloaded >= $max)) return $downloaded;
+        }
+        return $downloaded;
+    }
 }

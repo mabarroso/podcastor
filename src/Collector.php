@@ -85,7 +85,8 @@ class Collector
                     $item_data['filesize'],
                     $item_data['url'],
                     $item_data['date'],
-                    $item_data['duration']
+                    $item_data['duration'],
+                    $item_data['media']
                 );
             }
         }

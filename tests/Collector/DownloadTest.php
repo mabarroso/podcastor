@@ -126,4 +126,64 @@ class DownloadTest extends PHPUnit_Framework_TestCase
         $this->subject->setPath(self::FILEPATH.'other');
         $this->assertEquals('http://aaaa/other/filename.mp3', $this->subject->getURL('filename', self::FILEPATH, 'http://aaaa/'));
     }
+
+    /**
+     * [testGetPends description]
+     *
+     * @return none
+     */
+    public function testGetPends()
+    {
+        $this->subject->setPath(self::FILEPATH);
+
+        file_put_contents(self::FILEPATH.'/1.pend', 'http://foo/bar/1');
+        file_put_contents(self::FILEPATH.'/2.pend', 'http://foo/bar/2');
+        file_put_contents(self::FILEPATH.'/3.pend', 'http://foo/bar/3');
+
+        $pends = $this->subject->getPends();
+
+        $this->assertEquals(
+            array(
+                self::FILEPATH.'/1.pend',
+                self::FILEPATH.'/2.pend',
+                self::FILEPATH.'/3.pend'
+            ),
+            $pends
+        );
+    }
+
+    /**
+     * [testDownloadPends description]
+     *
+     * @return none
+     */
+    public function testDownloadPends()
+    {
+
+        $subject = $this->getMock('Download', array('getURLFileContents'));
+        $subject->expects($this->any())
+            ->method('getURLFileContents')
+            ->will($this->returnValue(true));
+
+        $subject->setPath(self::FILEPATH);
+
+        file_put_contents(self::FILEPATH.'/1.pend', 'http://foo/bar/1');
+        file_put_contents(self::FILEPATH.'/2.pend', 'http://foo/bar/2');
+        file_put_contents(self::FILEPATH.'/3.pend', 'http://foo/bar/3');
+
+        $subject->downloadPends(1);
+
+        $this->assertTrue(file_exists(self::FILEPATH.'/1.mp3'));
+        $this->assertFalse(file_exists(self::FILEPATH.'/1.pend'));
+        $this->assertTrue(file_exists(self::FILEPATH.'/2.pend'));
+        $this->assertTrue(file_exists(self::FILEPATH.'/3.pend'));
+
+        $subject->downloadPends();
+
+        $this->assertTrue(file_exists(self::FILEPATH.'/2.mp3'));
+        $this->assertFalse(file_exists(self::FILEPATH.'/2.pend'));
+        $this->assertTrue(file_exists(self::FILEPATH.'/3.mp3'));
+        $this->assertFalse(file_exists(self::FILEPATH.'/3.pend'));
+    }
+
 }
