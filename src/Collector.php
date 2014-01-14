@@ -6,8 +6,9 @@ require_once 'Collector/Download.php';
 define('DATA_PATH', './data/');
 
 $tasks = array(
-    array('Betabeers',          'http://www.ivoox.com/podcast-podcast-betabeers_sq_f189550_1.html',     'betabeers.xml', 'http://www.almianos.net/podcastor/'),
-    array('Terror y nada más',  'http://www.ivoox.com/podcast-terror-nada-mas_sq_f1407_1.html',         'tynm.xml',      'http://www.almianos.net/podcastor/'),
+    array('Betabeers',          'http://www.ivoox.com/podcast-podcast-betabeers_sq_f189550_1.html',                         'betabeers.xml', 'http://www.almianos.net/podcastor/'),
+    //array('Terror y nada más',  'http://www.ivoox.com/podcast-terror-nada-mas_sq_f1407_1.html',                           'tynm.xml',      'http://www.almianos.net/podcastor/'),
+    array('Laiseca',            'http://www.ivoox.com/podcast-cuentos-terror-narrados-alberto-laiseca_sq_f142367_1.html',    'laiseca.xml',   'http://www.almianos.net/podcastor/'),
 );
 
 $collector = new Collector();
@@ -71,7 +72,7 @@ class Collector
         $this->download->setPath(DATA_PATH.$podcast_id);
         $this->feed->setFile(DATA_PATH.$xml);
         $this->feed->open();
-        $this->feed->addHeader($items[0]['podcasttitle'], $url);
+        $this->feed->addHeader($items[0]['podcasttitle'], $url, $items[0]['image']);
         foreach ($items as $item_data) {
             if ($item_data) {
                 $this->download->add($item_data['id'], $item_data['media']);

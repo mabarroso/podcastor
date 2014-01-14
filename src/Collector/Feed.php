@@ -85,7 +85,7 @@ class Feed
      *
      * @return none
      */
-    public function addHeader($title, $link)
+    public function addHeader($title, $link, $image = '')
     {
         fputs(
             $this->_fh,
@@ -95,6 +95,9 @@ class Feed
     <channel>
         <title>$title</title>
         <link>$link</link>
+        <itunes:image href="$image"/>
+        <itunes:explicit>no</itunes:explicit>
+
 EOT
         );
     }
@@ -126,7 +129,7 @@ EOT
             <itunes:subtitle>$subtitle</itunes:subtitle>
             <itunes:summary>$summary</itunes:summary>
             <itunes:image href="$image" />
-            <enclosure url="$enclosure" length="$length" type="audio/x-m4a" />
+            <enclosure url="$enclosure" length="$length" type="audio/mpeg" />
             <guid>$guid</guid>
             <pubDate>$pubDate</pubDate>
             <itunes:duration>$duration</itunes:duration>

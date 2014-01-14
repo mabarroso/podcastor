@@ -3,3 +3,5 @@
     <channel>
         <title>title</title>
         <link>link</link>
+        <itunes:image href="image"/>
+        <itunes:explicit>no</itunes:explicit>

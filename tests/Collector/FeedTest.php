@@ -95,7 +95,7 @@ class FeedTest extends PHPUnit_Framework_TestCase
     public function testAddHeader()
     {
         $this->subject->open();
-        $this->subject->addHeader('title', 'link');
+        $this->subject->addHeader('title', 'link', 'image');
         $this->subject->close();
         $this->assertFileEquals('tests/_files/expected_feed_testAddHeader.xml', self::FILENAME);
     }
