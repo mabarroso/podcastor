@@ -19,7 +19,7 @@ def set_deploy stage_path
   set :common_data_path, "/www/#{stage_path}/site/mabarroso.com/_data/#{application}"
   set :deploy_to, "/www/deploy/#{stage_path}/mabarroso.com/#{application}"
   set :deployed_path, "/www/#{stage_path}/site/mabarroso.com/_cron/#{application}"
-  set :deployed_data_path, "#{deployed_path}/feeds"
+  set :deployed_data_path, "#{deployed_path}/data"
   set :rails_env, stage_path
 end
 
