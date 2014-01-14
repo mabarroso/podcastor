@@ -86,6 +86,7 @@ class Ivoox
 
         foreach ($query->results->audio as $audio) {
             $data = array(
+                'id' => '',
                 'description' => '',
                 'url' => '',
                 'title' => '',
@@ -97,6 +98,8 @@ class Ivoox
                 'podcasttitle' => '',
                 'channeltitle' => ''
             );
+
+            $data['id'] = (string) $audio->id;
 
             $data['description'] = (string) $audio->description;
             $data['url'] = (string)  $audio->shareurl;

@@ -98,6 +98,7 @@ class IvooxTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             array(
+                'id' => '950626',
                 'description' => "Relato Perteneciente A La Biblioteca Universal Del Terror Y El Misterio Adaptado Por TyNM\nwww.terrorynadamas.com\nwww.facebook.com/terrorynadamas",
                 'url' => 'http://www.ivoox.com/tynm-19-pedro-montero-emision-de-madrugada-audios-mp3_rf_950626_1.html',
                 'title' => 'TyNM 19 Pedro Montero - Emision De Madrugada',
