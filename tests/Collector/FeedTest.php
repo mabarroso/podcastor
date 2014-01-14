@@ -131,7 +131,8 @@ class FeedTest extends PHPUnit_Framework_TestCase
             '8727310',
             'http://example.com/podcasts/archive/aae20050615.m4a',
             'Wed, 15 Jun 2005 19:00:00 GMT',
-            '7:04'
+            '7:04',
+            'xta'
         );
         $this->subject->close();
         $this->assertFileEquals('tests/_files/expected_feed_testAddItem.xml', self::FILENAME);

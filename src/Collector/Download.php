@@ -124,26 +124,33 @@ class Download
     /**
      * [getURLFileContents description]
      *
-     * @param [type] $url [description]
+     * @param [type] $url      [description]
+     * @param [type] $filename [description]
      *
      * @return Bolean or Data
      */
-    public function getURLFileContents($url)
+    public function getURLFileContents($url, $filename)
     {
         $agent = 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)';
+
+        set_time_limit(0);
+        $fp = fopen($filename, 'w+');
 
         $ch = curl_init();
         $source = $url;
         //curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_URL, $source);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+        //curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_USERAGENT, $agent);
         //curl_setopt($ch, CURLOPT_REFERER, 'https://www.domain.com/');
-        $data = curl_exec($ch);
+        curl_exec($ch);
         curl_close($ch);
+        fclose($fp);
 
-        return $data;
+        return true;
     }
 
     /**
@@ -162,11 +169,8 @@ class Download
             $filename_mp3 = str_replace('.pend', '.mp3', $filename_pend);
             $url = file_get_contents($filename_pend);
 
-            $data = $this->getURLFileContents($url, $filename_mp3);
-            if ($data) {
-                $file = fopen($filename_mp3, "w+");
-                fputs($file, $data);
-                fclose($file);
+            $result = $this->getURLFileContents($url, $filename_mp3);
+            if ($result) {
                 $downloaded++;
                 unlink($filename_pend);
             } else {

@@ -8,4 +8,7 @@
             <guid>http://example.com/podcasts/archive/aae20050615.m4a</guid>
             <pubDate>Wed, 15 Jun 2005 19:00:00 GMT</pubDate>
             <itunes:duration>7:04</itunes:duration>
+            <xta>
+                xta
+            </xta>
         </item>
