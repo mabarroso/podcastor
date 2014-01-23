@@ -78,10 +78,26 @@ class Feed
     }
 
     /**
+     * [sanitize description]
+     *
+     * @param [type] $string [description]
+     *
+     * @return [type]         [description]
+     */
+    public function sanitize($string)
+    {
+        return str_replace(
+            array('&',      '<',   '>',   "'",      '"'),
+            array('&amp;', '&lt;', '&gt', '&apos;', '&quot;'),
+            $string
+        );
+    }
+    /**
      * [addHeader description]
      *
      * @param [type] $title [description]
      * @param [type] $link  [description]
+     * @param [type] $image [description]
      *
      * @return none
      */
@@ -93,7 +109,7 @@ class Feed
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
     <channel>
-        <title>$title</title>
+        <title>{$this->sanitize($title)}</title>
         <link>$link</link>
         <itunes:image href="$image"/>
         <itunes:explicit>no</itunes:explicit>
@@ -118,16 +134,33 @@ EOT
         );
     }
 
+    /**
+     * [addItem description]
+     *
+     * @param [type] $title     [description]
+     * @param [type] $author    [description]
+     * @param [type] $subtitle  [description]
+     * @param [type] $summary   [description]
+     * @param [type] $image     [description]
+     * @param [type] $enclosure [description]
+     * @param [type] $length    [description]
+     * @param [type] $guid      [description]
+     * @param [type] $pubDate   [description]
+     * @param [type] $duration  [description]
+     * @param string $extra     [description]
+     *
+     * @return none
+     */
     public function addItem($title, $author, $subtitle, $summary, $image, $enclosure, $length, $guid, $pubDate, $duration, $extra = '')
     {
         fputs(
             $this->_fh,
 <<<EOT
         <item>
-            <title>$title</title>
-            <itunes:author>$author</itunes:author>
-            <itunes:subtitle>$subtitle</itunes:subtitle>
-            <itunes:summary>$summary</itunes:summary>
+            <title>{$this->sanitize($title)}</title>
+            <itunes:author>{$this->sanitize($author)}</itunes:author>
+            <itunes:subtitle>{$this->sanitize($subtitle)}</itunes:subtitle>
+            <itunes:summary>{$this->sanitize($summary)}</itunes:summary>
             <itunes:image href="$image" />
             <enclosure url="$enclosure" length="$length" type="audio/mpeg" />
             <guid>$guid</guid>

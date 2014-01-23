@@ -67,8 +67,6 @@ class FeedTest extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue(file_exists(self::FILENAME), "File ".self::FILENAME." must be created by constructor");
         $this->subject->close();
-        //$this->unlink(self::FILENAME);
-        //$this->assertFalse(file_exists(self::FILENAME), "File ".self::FILENAME." must be deleted");
         $this->subject->setFile(self::FILENAME);
         $this->assertTrue(file_exists(self::FILENAME), "File ".self::FILENAME." must be created");
     }
@@ -81,10 +79,18 @@ class FeedTest extends PHPUnit_Framework_TestCase
     public function testOpen()
     {
         $this->subject->close();
-        //$this->unlink(self::FILENAME);
-        //$this->assertFalse(file_exists(self::FILENAME), "File ".self::FILENAME." must be deleted");
         $this->subject->open();
         $this->assertTrue(file_exists(self::FILENAME), "File ".self::FILENAME." must be created");
+    }
+
+    /**
+     * [testSanitize description]
+     *
+     * @return none
+     */
+    public function testSanitize()
+    {
+        $this->assertEquals('&amp;', $this->subject->sanitize('&'));
     }
 
     /**
@@ -95,7 +101,7 @@ class FeedTest extends PHPUnit_Framework_TestCase
     public function testAddHeader()
     {
         $this->subject->open();
-        $this->subject->addHeader('title', 'link', 'image');
+        $this->subject->addHeader('title &', 'link', 'image');
         $this->subject->close();
         $this->assertFileEquals('tests/_files/expected_feed_testAddHeader.xml', self::FILENAME);
     }
@@ -122,10 +128,10 @@ class FeedTest extends PHPUnit_Framework_TestCase
     {
         $this->subject->open();
         $this->subject->addItem(
-            'Shake Shake Shake Your Spices',
-            'John Doe',
-            'A short primer on table spices',
-            'This week we talk about salt and pepper shakers, comparing and contrasting pour rates, construction materials, and overall aesthetics. Come and join the party!',
+            'Shake Shake & Shake Your Spices',
+            'John Doe &',
+            'A short & primer on table spices',
+            'This week & we talk about salt and pepper shakers, comparing and contrasting pour rates, construction materials, and overall aesthetics. Come and join the party!',
             'http://example.com/podcasts/everything/AllAboutEverything/Episode1.jpg',
             'http://example.com/podcasts/everything/AllAboutEverythingEpisode3.m4a',
             '8727310',
