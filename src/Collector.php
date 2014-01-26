@@ -6,12 +6,14 @@ require_once 'Collector/Download.php';
 define('DATA_PATH', './data/');
 
 $tasks = array(
-    array('Betabeers',          'http://www.ivoox.com/podcast-podcast-betabeers_sq_f189550_1.html',                         'betabeers.xml',            'http://www.almianos.net/podcastor/'),
-    //array('Terror y nada más',  'http://www.ivoox.com/podcast-terror-nada-mas_sq_f1407_1.html',                           'tynm.xml',                 'http://www.almianos.net/podcastor/'),
-    array('Laiseca',            'http://www.ivoox.com/podcast-cuentos-terror-narrados-alberto-laiseca_sq_f142367_1.html',    'laiseca.xml',             'http://www.almianos.net/podcastor/'),
-    array('Cuentos de terror',  'http://www.ivoox.com/podcast-cuentos-de-terror_sq_f123688_1.html',                          'cuentos-de-terror.xml',   'http://www.almianos.net/podcastor/'),
-    array('Iniciador',          'http://www.ivoox.com/podcast-ponencias-iniciador_sq_f11368_1.html',                         'iniciador.xml',           'http://www.almianos.net/podcastor/'),
-    array('TED ES',             'http://www.ivoox.com/podcast-conferencias-ted-espanol_sq_f197583_1.html    ',               'ted-es.xml',              'http://www.almianos.net/podcastor/'),
+    array('Betabeers',                   'http://www.ivoox.com/podcast-podcast-betabeers_sq_f189550_1.html',                         'betabeers.xml',            'http://www.almianos.net/podcastor/'),
+    //array('Terror y nada más',           'http://www.ivoox.com/podcast-terror-nada-mas_sq_f1407_1.html',                           'tynm.xml',                 'http://www.almianos.net/podcastor/'),
+    array('Laiseca',                     'http://www.ivoox.com/podcast-cuentos-terror-narrados-alberto-laiseca_sq_f142367_1.html',    'laiseca.xml',             'http://www.almianos.net/podcastor/'),
+    array('Cuentos de terror',           'http://www.ivoox.com/podcast-cuentos-de-terror_sq_f123688_1.html',                          'cuentos-de-terror.xml',   'http://www.almianos.net/podcastor/'),
+    array('Iniciador',                   'http://www.ivoox.com/podcast-ponencias-iniciador_sq_f11368_1.html',                         'iniciador.xml',           'http://www.almianos.net/podcastor/'),
+    array('TED ES',                      'http://www.ivoox.com/podcast-conferencias-ted-espanol_sq_f197583_1.html',                   'ted-es.xml',              'http://www.almianos.net/podcastor/'),
+    array('Emprendimiento e innovación', 'http://www.ivoox.com/podcast-emprendimientos-e-innovacion_sq_f1112_1.html',                 'emp-inno.xml',            'http://www.almianos.net/podcastor/'),
+    array('Emprendeduría EOI',           'http://www.ivoox.com/podcast-emprendeduria-eoi_sq_f133742_1.html',                          'eoi.xml',                 'http://www.almianos.net/podcastor/'),
 );
 
 $collector = new Collector();
