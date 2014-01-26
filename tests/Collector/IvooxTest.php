@@ -86,6 +86,18 @@ class IvooxTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * [testGetImage description]
+     *
+     * @return none
+     */
+    public function testGetImage()
+    {
+        $image = $this->subject->getImage(file_get_contents('tests/_files/ivoox_podcast-X_sq_f1X_1.html'));
+
+        $this->assertEquals($image, 'http://images2.ivoox.com/canales/2781272969772g.jpg');
+    }
+
+    /**
      * [testGetItemList description]
      *
      * @return none

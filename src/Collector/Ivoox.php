@@ -68,6 +68,21 @@ class Ivoox
         return self::URL_RSS.$id;
     }
 
+    /**
+     * [getImage description]
+     *
+     * @param [type] $html [description]
+     *
+     * @return [type]       [description]
+     */
+    public function getImage($html)
+    {
+        if (preg_match("|img src=\"([^\"]+)\"[^>]+class=\"imagen_ficha|", $html, $matches)) {
+            return $matches[1];
+        }
+
+        return false;
+    }
 
     /**
      * [getItemData description]

@@ -72,10 +72,14 @@ class Collector
 
         if (count($items) == 0) return false;
 
+        $image = $this->ivoox->getImage(file_get_contents($url));
+
+        if (!$image) $image = $items[0]['image'];
+
         $this->download->setPath(DATA_PATH.$podcast_id);
         $this->feed->setFile(DATA_PATH.$xml);
         $this->feed->open();
-        $this->feed->addHeader($items[0]['podcasttitle'], $url, $items[0]['image']);
+        $this->feed->addHeader($items[0]['podcasttitle'], $url, $image);
         foreach ($items as $item_data) {
             if ($item_data) {
                 $this->download->add($item_data['id'], $item_data['media']);
