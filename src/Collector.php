@@ -14,6 +14,7 @@ $tasks = array(
     array('TED ES',                      'http://www.ivoox.com/podcast-conferencias-ted-espanol_sq_f197583_1.html',                   'ted-es.xml',              'http://www.almianos.net/podcastor/'),
     array('Emprendimiento e innovación', 'http://www.ivoox.com/podcast-emprendimientos-e-innovacion_sq_f1112_1.html',                 'emp-inno.xml',            'http://www.almianos.net/podcastor/'),
     array('Emprendeduría EOI',           'http://www.ivoox.com/podcast-emprendeduria-eoi_sq_f133742_1.html',                          'eoi.xml',                 'http://www.almianos.net/podcastor/'),
+    array('Noviembre Nocturno',          'http://www.ivoox.com/podcast-podcast-noviembre-nocturno_sq_f111421_1.html',                 'noviembrenocturno.xml',   'http://www.almianos.net/podcastor/'),
 );
 
 $collector = new Collector();
